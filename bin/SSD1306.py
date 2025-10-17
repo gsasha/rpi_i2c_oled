@@ -189,3 +189,42 @@ class SSD1306_128_32(SSD1306Base):
         self.command(0x40)
         self.command(SSD1306_DISPLAYALLON_RESUME)           # 0xA4
         self.command(SSD1306_NORMALDISPLAY)                 # 0xA6
+
+class SSD1309_128_64(SSD1306Base):
+    def __init__(self, busnum=1, i2c_address=SSD1306_I2C_ADDRESS):
+        # Call base class constructor for 128x64 display.
+        super(SSD1309_128_64, self).__init__(128, 64, i2c_address, busnum)
+
+    def _initialize(self):
+        # 128x64 pixel specific initialization.
+        self.command(SSD1306_DISPLAYOFF)
+        self.command(SSD1306_SETDISPLAYCLOCKDIV)
+        self.command(0x80)
+        self.command(SSD1306_SETMULTIPLEX)
+        self.command(0x3F)  # Set MUX for 64 lines
+        self.command(SSD1306_SETDISPLAYOFFSET)
+        self.command(0x0)
+        self.command(SSD1306_SETSTARTLINE | 0x0)
+        self.command(SSD1306_CHARGEPUMP)
+        if self._vccstate == SSD1306_EXTERNALVCC:
+            self.command(0x10)
+        else:
+            self.command(0x14)
+        self.command(SSD1306_MEMORYMODE)
+        self.command(0x00)
+        self.command(SSD1306_SEGREMAP | 0x1)
+        self.command(SSD1306_COMSCANDEC)
+        self.command(SSD1306_SETCOMPINS)
+        self.command(0x12)  # Set COM Pins for 64 lines
+        self.command(SSD1306_SETCONTRAST)
+        self.command(0xCF)
+        self.command(SSD1306_SETPRECHARGE)
+        if self._vccstate == SSD1306_EXTERNALVCC:
+            self.command(0x22)
+        else:
+            self.command(0xF1)
+        self.command(SSD1306_SETVCOMDETECT)
+        self.command(0x40)
+        self.command(SSD1306_DISPLAYALLON_RESUME)
+        self.command(SSD1306_NORMALDISPLAY)
+
