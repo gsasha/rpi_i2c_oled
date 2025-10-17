@@ -414,6 +414,11 @@ class SplashScreen(BaseScreen):
 class NetworkScreen(BaseScreen):
     def render(self):
         self.hint = 'NET'
+        self.logger.info("Rendering NetworkScreen with icon "+'/mg/ip-network.png')
+        self.logger.info("Icon full path is " + r"" + Utils.current_dir + "/img/ip-network.png")
+        img = Image.open(r"" + Utils.current_dir + "/img/home-assistant-logo.png")
+        self.logger.info("---sss--- img is " + img)
+
         self.set_icon('/img/ip-network.png')
 
         hostname = self.utils.get_hostname()
