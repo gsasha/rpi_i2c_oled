@@ -106,7 +106,7 @@ class BaseScreen:
            # invert black icon to white (255) for OLED display
            #self.icon = ImageOps.invert( self.icon )
            self.icon = img.resize([30, 30])
-           self.logger.info("Icon is " + self.icon)
+           self.logger.info("Icon is " + str(self.icon.width))
 
 
     @property
