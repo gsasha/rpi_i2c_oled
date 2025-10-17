@@ -100,7 +100,7 @@ class BaseScreen:
         if not self.icon or self.icon_path != path:
            self.icon_path = path
            img = Image.open(r"" + Utils.current_dir + self.icon_path)
-           self.logger.info("Loaded image from " + Utils.current_dir + self.icon_path + ": " + img)
+           self.logger.info("Loaded image from " + Utils.current_dir + self.icon_path + ": " + img.size)
            # img = img.convert('RGBA') # MUST be in RGB mode for the OLED
            # invert black icon to white (255) for OLED display
            #self.icon = ImageOps.invert( self.icon )
