@@ -106,7 +106,7 @@ class BaseScreen:
            # invert black icon to white (255) for OLED display
            #self.icon = ImageOps.invert( self.icon )
            self.icon = img.resize([30, 30])
-           self.logger.info("Icon is " + str(self.icon.width))
+           self.logger.info("---sss--- Icon is " + str(self.icon.width))
 
 
     @property
@@ -139,6 +139,7 @@ class BaseScreen:
            x = self.text_indent
            y = self.text_y[line]
            self.display.draw.text((x, y), text, font=font, fill=255)
+           self.logger.info("---sss--- Displaying text '" + text + "'at " + str(x) + ":" + str(y))
 
            line += 1
            if line >= 3:
@@ -222,7 +223,10 @@ class BaseScreen:
 
         # add icon to canvas (if enabled)
         if self.display.show_icons and self.icon:
+           self.logging.info("---sss--- Showing icons")
            self.display.image.paste(self.icon, (-3, 3))
+        else:
+           self.logging.info("---sss--- Not showing icons")
 
         self.capture_screenshot()
         self.display.show()
@@ -416,9 +420,6 @@ class NetworkScreen(BaseScreen):
     def render(self):
         self.hint = 'NET'
         self.logger.info("Rendering NetworkScreen with icon "+'/mg/ip-network.png')
-        self.logger.info("Icon full path is " + r"" + Utils.current_dir + "/img/ip-network.png")
-        img = Image.open(r"" + Utils.current_dir + "/img/home-assistant-logo.png")
-        self.logger.info("---sss--- img is " + ','.join(img.size))
 
         self.set_icon('/img/ip-network.png')
 
