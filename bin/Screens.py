@@ -100,7 +100,7 @@ class BaseScreen:
         if not self.icon or self.icon_path != path:
            self.icon_path = path
            img = Image.open(r"" + Utils.current_dir + self.icon_path)
-           self.logger.info("Loaded image from " + Utils.current_dir + self.icon_path + ": " + img.size)
+           self.logger.info("Loaded image from " + Utils.current_dir + self.icon_path + ": " + ','.join(img.size))
            # img = img.convert('RGBA') # MUST be in RGB mode for the OLED
            # invert black icon to white (255) for OLED display
            #self.icon = ImageOps.invert( self.icon )
@@ -417,7 +417,7 @@ class NetworkScreen(BaseScreen):
         self.logger.info("Rendering NetworkScreen with icon "+'/mg/ip-network.png')
         self.logger.info("Icon full path is " + r"" + Utils.current_dir + "/img/ip-network.png")
         img = Image.open(r"" + Utils.current_dir + "/img/home-assistant-logo.png")
-        self.logger.info("---sss--- img is " + img)
+        self.logger.info("---sss--- img is " + ','.join(img.size))
 
         self.set_icon('/img/ip-network.png')
 
