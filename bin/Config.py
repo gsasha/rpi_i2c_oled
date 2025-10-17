@@ -39,7 +39,7 @@ class Config:
         'show_icons': 'show_icons',
         'show_hint': 'show_hint',
         'compact': 'compact',
-        'driver': 'SSD1306'
+        'driver': 'driver'
     }
 
     logger = logging.getLogger('Config')
