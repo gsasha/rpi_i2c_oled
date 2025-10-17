@@ -112,7 +112,7 @@ class BaseScreen:
     @property
     def text_indent(self):
         """ :return: how far to indent a line of text for this screen """
-        self.logger.info("---sss--- Computing text_indent. show_icons=" + str(show_icons) + ", icon=" + str(self.icon.width))
+        self.logger.info("---sss--- Computing text_indent. show_icons=" + str(self.display.show_icons) + ", icon=" + str(self.icon.width))
         if self.display.show_icons and self.icon:
             return 29
         elif self.hint and not self.display.hint_right:
