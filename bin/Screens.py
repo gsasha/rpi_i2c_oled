@@ -6,6 +6,7 @@ from PIL import Image, ImageDraw, ImageFont, ImageOps
 
 from bin.Scroller import Scroller
 from bin.SSD1306 import SSD1306_128_32 as SSD1306
+from bin.SSD1306 import SSD1309_128_64 as SSD1309
 from bin.Utils import Utils
 
 
@@ -14,13 +15,19 @@ class Display:
     SCREENSHOT_PATH = "./img/examples/"
 
     def __init__(self, busnum = None, screenshot = False, rotate = False, show_icons = True,
-                 compact = False, show_hint = False):
+                 compact = False, driver = "SSD1306", show_hint = False):
         self.logger = logging.getLogger('Display')
 
         if not isinstance(busnum, int):
             busnum = Display.DEFAULT_BUSNUM
 
-        self.display = SSD1306(busnum)
+        if driver == "SSD1306":
+          self.display = SSD1306(busnum)
+        elif driver == "SSD1309":
+          self.display = SSD1309(busnum)
+        else:
+          # Preserve current behavior as default.
+          self.display = SSD1306(busnum)
         self.clear()
         self.width = self.display.width
         self.height = self.display.height

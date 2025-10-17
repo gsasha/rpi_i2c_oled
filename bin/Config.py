@@ -38,7 +38,8 @@ class Config:
         'rotate': 'rotate',
         'show_icons': 'show_icons',
         'show_hint': 'show_hint',
-        'compact': 'compact'
+        'compact': 'compact',
+        'driver': 'SSD1306'
     }
 
     logger = logging.getLogger('Config')
@@ -118,10 +119,12 @@ class Config:
             show_icons = self.get_option_value('show_icons')
             show_hint = self.get_option_value('show_hint')
             compact = self.get_option_value('compact')
+            driver = self.get_option_value('driver')
 
             self.display = Display(busnum=busnum, screenshot=screenshot,
                                    rotate=rotate, show_icons=show_icons,
-                                   show_hint=show_hint, compact=compact)
+                                   show_hint=show_hint, compact=compact,
+                                   driver=driver)
 
         except Exception as e:
             raise Exception("Could not create display. Check your i2c bus with 'ls /dev/i2c-*'.")
