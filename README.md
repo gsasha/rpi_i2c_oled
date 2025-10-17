@@ -1,7 +1,7 @@
 I2C OLED Controller for Raspberry Pi
 ====================================
 
-Python library to enable 128x32 pixel OLED for Raspberry Pi (both 32 and 64-bit) that utilize the SSD1306 chipset. This works as a standalone service and can run on a standard Raspberry Pi running Raspian.
+Python library to enable 128x32 and 128x64 pixel OLED for Raspberry Pi (both 32 and 64-bit) that utilize the SSD1306/SSD1309 chipset. This works as a standalone service and can run on a standard Raspberry Pi running Raspian.
 
 **This addon leverages the original [Adafruit Python SSD1306](https://github.com/adafruit/Adafruit_Python_SSD1306) and [GPIO](https://github.com/adafruit/Adafruit_Python_GPIO) libraries, which have been deprecated. However, I have taken the nessassary parts out of this and bundled them into this I2C module avoiding the need for GPIO and relying on the Raspberry Pi's I2C setup.**
 
@@ -50,7 +50,7 @@ Home Assistant Support
 ======================
 This repository has been broken out to work as a standalone service and will work on a standard Raspberry Pi running Raspian. Any screens which are dependent on Home Assistant (e.g. ```Splash```) will be automatically disabled.
 
-The Home Assistant add-on that uses this can be accessed from [HomeAssistant_Addons](https://github.com/crismc/homeassistant_addons)
+The Home Assistant add-on that uses this can be accessed from [HomeAssistant_Addons](https://github.com/gsasha/homeassistant_addons)
 <br>
 <br>
 
@@ -80,7 +80,7 @@ sudo raspi-config
 ----------------
 Those who want to get started quickly and conveniently may install the RPI_I2C_OLED using the following command:
 ```
-curl -sSL https://raw.githubusercontent.com/crismc/rpi_i2c_oled/v1.0.4/basic-install.sh | sudo bash
+curl -sSL https://raw.githubusercontent.com/gsasha/rpi_i2c_oled/v1.0.4/basic-install.sh | sudo bash
 ```
 
 This will download the latest release, and install it as a service. Once run, you can control the ```oled``` service by the following:
@@ -109,7 +109,7 @@ sudo apt-get install python3-dev python3-smbus python3-pil
 
 Checkout this code
 ```
-git clone git@github.com:crismc/rpi_i2c_oled.git
+git clone git@github.com:gsasha/rpi_i2c_oled.git
 cd rpi_i2c_oled
 ```
 
@@ -230,20 +230,22 @@ I2C](https://www.amazon.co.uk/gp/product/B07BDFXFRK/)
 
 * [Tony DiCola](https://github.com/tdicola) ([RIP](https://cascadememorial.com/obituary/659469/Anthony-Charles-Dicola/)) and [Adafruit Industries](https://github.com/adafruit) for initial implementation details, see original repo: https://github.com/adafruit/Adafruit_Python_SSD1306
 
-* [crismc](https://github.com/crismc/) - After the removal of GPIO support from Home Assistant, the referenced addon no longer worked for me, so I took the initial project apart, and smashed it together with the Adafruit I2C libraries removing the GPIO requirements. Additionally, the original build didn't work on 64-bit versions of the Raspberry Pi, nor would it work as a stand alone service.
+* [gsasha](https://github.com/gsasha/) - After the removal of GPIO support from Home Assistant, the referenced addon no longer worked for me, so I took the initial project apart, and smashed it together with the Adafruit I2C libraries removing the GPIO requirements. Additionally, the original build didn't work on 64-bit versions of the Raspberry Pi, nor would it work as a stand alone service.
+
+* [gsasha](https://github.com/gsasha/) - I have added support for 128*64 screens.
 
 * Ultronics
 
 ## See Also
 
-* [IC2 OLED Home Assistant Add-On](https://github.com/crismc/homeassistant_addons)
+* [IC2 OLED Home Assistant Add-On](https://github.com/gsasha/homeassistant_addons)
 * [Adafruit Python SSD1306 notice to comply with distribution requirement](Adafruit_Notice.md)
 
 
 <!-- References -->
-[release-badge]: https://img.shields.io/github/v/release/crismc/rpi_i2c_oled?style=flat-square
-[downloads-badge]: https://img.shields.io/github/downloads/crismc/rpi_i2c_oled/total?style=flat-square
-[release-url]: https://github.com/crismc/rpi_i2c_oled/releases
+[release-badge]: https://img.shields.io/github/v/release/gsasha/rpi_i2c_oled?style=flat-square
+[downloads-badge]: https://img.shields.io/github/downloads/gsasha/rpi_i2c_oled/total?style=flat-square
+[release-url]: https://github.com/gsasha/rpi_i2c_oled/releases
 [license-badge]: https://img.shields.io/badge/License-MIT-yellow.svg
 [license-url]: https://opensource.org/licenses/MIT
 

@@ -4,7 +4,7 @@
 set -e
 
 E_NOTROOT=87 # Non-root exit error.
-REPO="crismc/rpi_i2c_oled"
+REPO="gsasha/rpi_i2c_oled"
 APP_DIR="rpi_i2c_oled"
 TEMP_PATH="/tmp/$APP_DIR"
 INSTALL_PATH="/etc/$APP_DIR"
