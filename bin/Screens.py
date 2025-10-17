@@ -22,8 +22,10 @@ class Display:
             busnum = Display.DEFAULT_BUSNUM
 
         if driver == "SSD1306":
+          self.logger.info("Creating a SSD1306 driver")
           self.display = SSD1306(busnum)
         elif driver == "SSD1309":
+          self.logger.info("Creating a SSD1309 driver")
           self.display = SSD1309(busnum)
         else:
           # Preserve current behavior as default.
