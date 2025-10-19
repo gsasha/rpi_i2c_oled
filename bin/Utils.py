@@ -72,7 +72,7 @@ class HassioUtils(Utils):
     @staticmethod
     def hassos_get_info(type):
         url = 'http://supervisor/{}'.format(type)
-        Utils.logger.info("Requesting data from '" + url + "'"
+        Utils.logger.info("Requesting data from '" + url + "'")
         cmd = 'curl -sSL -H "Authorization: Bearer $SUPERVISOR_TOKEN" -H "Content-Type: application/json" ' + url
         info = Utils.shell_cmd(cmd)
         return json.loads(info)
