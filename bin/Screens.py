@@ -100,13 +100,10 @@ class BaseScreen:
         if not self.icon or self.icon_path != path:
            self.icon_path = path
            img = Image.open(r"" + Utils.current_dir + self.icon_path)
-           self.logger.info("---sss--- Running set_icon " + path)
-           self.logger.info("Loaded image from " + Utils.current_dir + self.icon_path + ": " + str(img.width))
            # img = img.convert('RGBA') # MUST be in RGB mode for the OLED
            # invert black icon to white (255) for OLED display
            #self.icon = ImageOps.invert( self.icon )
            self.icon = img.resize([30, 30])
-           self.logger.info("---sss--- Icon is " + str(self.icon.width))
 
 
     @property
@@ -143,7 +140,7 @@ class BaseScreen:
            self.logger.info("---sss--- Displaying text '" + text + "'at " + str(x) + ":" + str(y))
 
            line += 1
-           if line >= 3:
+           if line >= 6:
               return # too many lines passed in!
 
     def set_text_lines(self, num_lines):
@@ -420,14 +417,19 @@ class SplashScreen(BaseScreen):
 class NetworkScreen(BaseScreen):
     def render(self):
         self.hint = 'NET'
-        self.logger.info("Rendering NetworkScreen with icon "+'/mg/ip-network.png')
 
         self.set_icon('/img/ip-network.png')
 
         hostname = self.utils.get_hostname()
         ipv4 = self.utils.get_ip()
+        ping_status = Utils.get_entity_state("binary_sensor.8_8_8_8")
+        ping_latency = Utils.get_entity_state("sensor.8_8_8_8_round_trip_time_average")
+        if ping_status:
+          ping_line = "Ping: " + str(ping_latency
+        else:
+          ping_line = "Internet disconnected"
 
-        self.display_text([ hostname, ipv4 ])
+        self.display_text([ hostname, ipv4, ping_line ])
         #self.display_text([ hostname, ipv4, mac.upper() ])
 
         self.render_with_defaults()

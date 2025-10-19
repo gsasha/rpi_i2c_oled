@@ -132,3 +132,24 @@ class HassioUtils(Utils):
                 raise Exception("No data available")
         except Exception as e:
             Utils.logger.warning("Could not load hassio info url '"+ url +"': " + str(e))
+
+    def get_entity_state(token, entity_id):
+        """Gets the state of a specific entity from Home Assistant."""
+        headers = {
+            'Authorization': f'Bearer {token}',
+            'content-type': 'application/json',
+        }
+        url = f'http://supervisor/core/api/states/{entity_id}'
+    
+        try:
+            response = requests.get(url, headers=headers, timeout=5)
+            response.raise_for_status()  # Raise an exception for bad responses
+            data = response.json()
+            return data.get('state')
+        except requests.exceptions.ConnectionError:
+            _LOGGER.warning(f"Connection error when trying to get entity {entity_id}")
+        except Exception as e:
+            _LOGGER.warning(f"Error getting entity {entity_id}: {e}")
+    
+        return None
+
