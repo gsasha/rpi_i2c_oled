@@ -417,6 +417,7 @@ class SplashScreen(BaseScreen):
 class NetworkScreen(BaseScreen):
     def render(self):
         self.hint = 'NET'
+        self.logger.info("---sss--- something")
 
         self.set_icon('/img/ip-network.png')
 
