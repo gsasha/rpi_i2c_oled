@@ -133,6 +133,7 @@ class HassioUtils(Utils):
         except Exception as e:
             Utils.logger.warning("Could not load hassio info url '"+ url +"': " + str(e))
 
+    @staticmethod
     def get_entity_state(token, entity_id):
         """Gets the state of a specific entity from Home Assistant."""
         headers = {
