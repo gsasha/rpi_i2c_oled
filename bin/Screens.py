@@ -422,8 +422,8 @@ class NetworkScreen(BaseScreen):
 
         hostname = self.utils.get_hostname()
         ipv4 = self.utils.get_ip()
-        ping_status = Utils.get_entity_state("binary_sensor.8_8_8_8")
-        ping_latency = Utils.get_entity_state("sensor.8_8_8_8_round_trip_time_average")
+        ping_status = self.utils.get_entity_state("binary_sensor.8_8_8_8")
+        ping_latency = self.utils.get_entity_state("sensor.8_8_8_8_round_trip_time_average")
         if ping_status:
           ping_line = "Ping: " + str(ping_latency)
         else:
