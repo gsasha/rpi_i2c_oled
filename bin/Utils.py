@@ -115,6 +115,8 @@ class HassioUtils(Utils):
         try :
             info = HassioUtils.hassos_get_info(url)
             if info and 'data' in info:
+                Utils.logger.info(f"Got info for url {url}")
+                Utils.logger.info(f"[[[\n${info}\n]]]")
                 value = info['data']
                 data_key = namespace
                 for prop in properties:
