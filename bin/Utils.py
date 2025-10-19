@@ -113,10 +113,38 @@ class HassioUtils(Utils):
         properties.pop(0)
         url = str(namespace) + "/info"
         Utils.logger.info("Searching '"+ namespace +" for': " + '.'.join(properties))
-        Utils.logger.info('---sss--- SUPERVISOR_TOKEN is ' + os.getenv('SUPERVISOR_TOKEN'))
         try :
             Utils.logger.info(f"Getting info for url {url}")
             info = HassioUtils.hassos_get_info(url)
+            Utils.logger.info(f"[[[\n${info}\n]]]")
+            if info and 'data' in info:
+                value = info['data']
+                data_key = namespace
+                for prop in properties:
+                    if prop in value:
+                        value = value[prop]
+                        data_key = '.'.join([data_key, prop])
+                    else:
+                        raise Exception("Could not find '" + value + "' in '" + data_key + "'")
+
+                if isinstance(value, dict):
+                    raise Exception("'" + property + "' is not a leaf")
+
+                return value
+            else:
+                raise Exception("No data available")
+        except Exception as e:
+            Utils.logger.warning("Could not load hassio info url '"+ url +"': " + str(e))
+
+    @staticmethod
+    def get_hassio_entity(properties_string):
+        '''
+            properties_string = namespace.rootproperty.leaf
+            e.g. properties_string as 'os.version.latest' will find {'latest':'version'} in os/info
+        '''
+        try :
+            Utils.logger.info(f"Getting info for url {properties_string}")
+            info = HassioUtils.hassos_get_info(properties_string)
             Utils.logger.info(f"[[[\n${info}\n]]]")
             if info and 'data' in info:
                 value = info['data']
