@@ -114,6 +114,8 @@ class HassioUtils(Utils):
         Utils.logger.info("Searching '"+ namespace +" for': " + '.'.join(properties))
         try :
             info = HassioUtils.hassos_get_info(url)
+            Utils.logger.info(f"Got info for url {url}")
+            Utils.logger.info(f"[[[\n${info}\n]]]")
             if info and 'data' in info:
                 Utils.logger.info(f"Got info for url {url}")
                 Utils.logger.info(f"[[[\n${info}\n]]]")
