@@ -2,6 +2,7 @@ import logging
 import json
 import pathlib
 import re
+import os
 import subprocess
 from datetime import datetime
 
@@ -112,9 +113,7 @@ class HassioUtils(Utils):
         properties.pop(0)
         url = str(namespace) + "/info"
         Utils.logger.info("Searching '"+ namespace +" for': " + '.'.join(properties))
-        cmd = 'echo $SUPERVISOR_TOKEN"'
-        info = Utils.shell_cmd(cmd)
-        Utils.logger.info('---sss--- INFO result is ' + str(info))
+        Utils.logger.info('---sss--- SUPERVISOR_TOKEN is ' + os.getenv('SUPERVISOR_TOKEN'))
         try :
             Utils.logger.info(f"Getting info for url {url}")
             info = HassioUtils.hassos_get_info(url)
