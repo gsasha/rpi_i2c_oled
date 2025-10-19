@@ -72,7 +72,7 @@ class HassioUtils(Utils):
     @staticmethod
     def hassos_get_info(type):
         url = 'http://supervisor/{}'.format(type)
-        Utils.logger.info("Requesting data from '" + url + "'")
+        Utils.logger.info("Requesting data from '" + url + "'"
         cmd = 'curl -sSL -H "Authorization: Bearer $SUPERVISOR_TOKEN" -H "Content-Type: application/json" ' + url
         info = Utils.shell_cmd(cmd)
         return json.loads(info)
@@ -112,6 +112,9 @@ class HassioUtils(Utils):
         properties.pop(0)
         url = str(namespace) + "/info"
         Utils.logger.info("Searching '"+ namespace +" for': " + '.'.join(properties))
+        cmd = 'echo $SUPERVISOR_TOKEN"'
+        info = Utils.shell_cmd(cmd)
+        Utils.logger.info('---sss--- INFO result is ' + str(info))
         try :
             Utils.logger.info(f"Getting info for url {url}")
             info = HassioUtils.hassos_get_info(url)
