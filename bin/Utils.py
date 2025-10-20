@@ -87,6 +87,7 @@ class HassioUtils(Utils):
         cmd = f'curl -sSL -H "Authorization: Bearer {token}" -H "Content-Type: application/json" {url}'
         Utils.logger.info("---sss--- running command " + cmd)
         info = Utils.shell_cmd(cmd)
+        Utils.logger.info("---sss--- Command output " + str(info))
         return json.loads(info)
 
     @staticmethod
