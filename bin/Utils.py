@@ -158,8 +158,7 @@ class HassioUtils(Utils):
             info = HassioUtils.hassos_get_api_object(state)
             Utils.logger.info(f"[[[\n${info}\n]]]")
             if info and 'data' in info:
-                value = info['data']
-                return value[property]
+                return info[property]
             else:
                 raise Exception("No data available")
         except Exception as e:

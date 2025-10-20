@@ -109,7 +109,6 @@ class BaseScreen:
     @property
     def text_indent(self):
         """ :return: how far to indent a line of text for this screen """
-        #self.logger.info("---sss--- Computing text_indent. show_icons=" + str(self.display.show_icons) + ", icon=" + str(self.icon.width))
         if self.display.show_icons and self.icon:
             return 29
         elif self.hint and not self.display.hint_right:
@@ -137,7 +136,6 @@ class BaseScreen:
            x = self.text_indent
            y = self.text_y[line]
            self.display.draw.text((x, y), text, font=font, fill=255)
-           self.logger.info("---sss--- Displaying text '" + text + "'at " + str(x) + ":" + str(y))
 
            line += 1
            if line >= 6:
@@ -221,10 +219,7 @@ class BaseScreen:
 
         # add icon to canvas (if enabled)
         if self.display.show_icons and self.icon:
-           self.logger.info("---sss--- Showing icons")
            self.display.image.paste(self.icon, (-3, 3))
-        else:
-           self.logger.info("---sss--- Not showing icons")
 
         self.capture_screenshot()
         self.display.show()
@@ -417,7 +412,6 @@ class SplashScreen(BaseScreen):
 class NetworkScreen(BaseScreen):
     def render(self):
         self.hint = 'NET'
-        self.logger.info("---sss--- something")
 
         self.set_icon('/img/ip-network.png')
 
