@@ -79,6 +79,14 @@ class HassioUtils(Utils):
         return json.loads(info)
 
     @staticmethod
+    def hassos_get_api_object(type):
+        url = 'http://api/states/{}'.format(type)
+        Utils.logger.info("Requesting data from '" + url + "'")
+        cmd = 'curl -sSL -H "Authorization: Bearer $SUPERVISOR_TOKEN" -H "Content-Type: application/json" ' + url
+        info = Utils.shell_cmd(cmd)
+        return json.loads(info)
+
+    @staticmethod
     def get_hostname(opt = ""):
         host_info = HassioUtils.hassos_get_info('host/info')
         return host_info['data']['hostname'].upper()
@@ -137,29 +145,17 @@ class HassioUtils(Utils):
             Utils.logger.warning("Could not load hassio info url '"+ url +"': " + str(e))
 
     @staticmethod
-    def get_hassio_entity(properties_string):
+    def get_hassio_entity(state, property):
         '''
             properties_string = namespace.rootproperty.leaf
             e.g. properties_string as 'os.version.latest' will find {'latest':'version'} in os/info
         '''
         try :
-            Utils.logger.info(f"Getting info for url {properties_string}")
-            info = HassioUtils.hassos_get_info(properties_string)
+            info = HassioUtils.hassos_get_api_object(state)
             Utils.logger.info(f"[[[\n${info}\n]]]")
             if info and 'data' in info:
                 value = info['data']
-                data_key = namespace
-                for prop in properties:
-                    if prop in value:
-                        value = value[prop]
-                        data_key = '.'.join([data_key, prop])
-                    else:
-                        raise Exception("Could not find '" + value + "' in '" + data_key + "'")
-
-                if isinstance(value, dict):
-                    raise Exception("'" + property + "' is not a leaf")
-
-                return value
+                return value[property]
             else:
                 raise Exception("No data available")
         except Exception as e:
