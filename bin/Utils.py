@@ -159,5 +159,5 @@ class HassioUtils(Utils):
             else:
                 raise Exception("No data available")
         except Exception as e:
-            Utils.logger.warning("Could not load hassio info url '"+ properties_string +"': " + str(e))
+            Utils.logger.warning("Could not load hassio info url '"+ state + ":" +property+"': " + str(e))
 
