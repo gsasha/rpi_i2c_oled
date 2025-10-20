@@ -1,8 +1,9 @@
-import logging
 import json
+import logging
 import pathlib
-import re
 import os
+import re
+import requests
 import subprocess
 from datetime import datetime
 
@@ -80,15 +81,38 @@ class HassioUtils(Utils):
 
     @staticmethod
     def hassos_get_api_object(type):
-        url = 'http://supervisor/core/api/states/{}'.format(type)
-
         token = os.environ.get('SUPERVISOR_TOKEN')
-        Utils.logger.info("Requesting data from '" + url + "'")
-        cmd = f'curl -sSL -H "Authorization: Bearer {token}" -H "Content-Type: application/json" {url}'
-        Utils.logger.info("---sss--- running command " + cmd)
-        info = Utils.shell_cmd(cmd)
-        Utils.logger.info("---sss--- Command output " + str(info))
-        return json.loads(info)
+        if token is None:
+            Utils.logger.warning("SUPERVISOR_TOKEN environment variable not set.")
+            return None
+        headers = {
+            'Authorization': f'Bearer {token}',
+            'Content-Type': 'application/json'
+        }
+
+        url = 'http://supervisor/core/api/states/{}'.format(type)
+        try:
+            # Make the network request
+            response = requests.get(url, headers=headers, timeout=5)
+            
+            # This line will raise an exception for 4xx or 5xx errors (like 401, 404)
+            response.raise_for_status() 
+            
+            info = response.json() 
+            
+            Utils.logger.info("---sss--- Command output " + str(info))
+            return info
+
+        except requests.exceptions.HTTPError as e:
+            Utils.logger.warning(f"HTTP Error for {type}: {e}")
+        except requests.exceptions.RequestException as e:
+            # This catches connection errors, timeouts, etc.
+            Utils.logger.warning(f"Error requesting {type}: {e}")
+        except Exception as e:
+            # Catch any other unexpected errors (like .json() failing)
+            Utils.logger.warning(f"Failed to get or parse data for {type}: {e}")
+            
+        return None
 
     @staticmethod
     def get_hostname(opt = ""):
