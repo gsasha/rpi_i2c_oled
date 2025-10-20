@@ -81,8 +81,11 @@ class HassioUtils(Utils):
     @staticmethod
     def hassos_get_api_object(type):
         url = 'http://supervisor/core/api/states/{}'.format(type)
+
+        token = os.environ.get('SUPERVISOR_TOKEN')
         Utils.logger.info("Requesting data from '" + url + "'")
-        cmd = 'curl -sSL -H "Authorization: Bearer $SUPERVISOR_TOKEN" -H "Content-Type: application/json" ' + url
+        cmd = f{'curl -sSL -H "Authorization: Bearer {token}" -H "Content-Type: application/json" {url}"
+        Utils.logger.info("---sss--- running command " + cmd)
         info = Utils.shell_cmd(cmd)
         return json.loads(info)
 
