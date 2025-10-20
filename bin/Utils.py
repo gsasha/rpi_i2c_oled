@@ -156,8 +156,8 @@ class HassioUtils(Utils):
         '''
         try :
             info = HassioUtils.hassos_get_api_object(state)
-            Utils.logger.info(f"[[[\n${info}\n]]]")
-            if info and 'data' in info:
+            Utils.logger.info(f"[[[\n{info}\n]]]")
+            if info:
                 return info[property]
             else:
                 raise Exception("No data available")
