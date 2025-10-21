@@ -415,15 +415,19 @@ class NetworkScreen(BaseScreen):
     def render(self):
         self.hint = 'NET'
 
-        self.set_icon('/img/ip-network.png')
+        # self.set_icon('/img/ip-network.png')
 
         hostname = self.utils.get_hostname()
         mem = self.utils.get_hassio_entity("sensor.system_monitor_memory_usage", "state")
         cpu = self.utils.get_hassio_entity("sensor.system_monitor_processor_use", "state")
         disk = self.utils.get_hassio_entity("sensor.system_monitor_disk_usage", "state")
         temp = self.utils.get_hassio_entity("sensor.system_monitor_processor_temperature", "state")
+        resource_line = f"C{cpu} M{mem} D{disk} t{temp}"
+
         ip_eth = self.utils.get_hassio_entity("sensor.system_monitor_ipv4_address_end0", "state")
         ip_wlan = self.utils.get_hassio_entity("sensor.system_monitor_ipv4_address_wlan0", "state")
+        ip_line = f"IP {ip_eth} {ip_wlan}"
+
         ping_status = self.utils.get_hassio_entity("binary_sensor.8_8_8_8", "state")
         ping_latency = self.utils.get_hassio_entity("sensor.8_8_8_8_round_trip_time_average", "state")
         self.logger.info(f"---sss--- ping_status '{ping_status}' ping_latency '{ping_latency}'")
@@ -434,12 +438,11 @@ class NetworkScreen(BaseScreen):
         download_speed = self.utils.get_hassio_entity("sensor.wan_download_speed_mbps", "state")
         upload_speed = self.utils.get_hassio_entity("sensor.wan_upload_speed_mbps", "state")
         wan_speed = f'U {upload_speed} D {download_speed}'
-        self.logger.info(f"---sss--- hostname '{hostname}' ipv4 '{ipv4}'")
+        self.logger.info(f"---sss--- hostname '{hostname}' ip_line '{ip_line}'")
+        self.logger.info(f"---sss--- resource_line '{resource_line}'")
         self.logger.info(f"---sss--- ping_line '{ping_line}' wan_speed '{wan_speed}'")
 
-        resource_line = f"C{cpu} M{mem} D{disk} t{temp}"
-        ip_line = f"IP {ip_eth} {ip_wlan}"
-        self.display_text([ hostname, resource_line, ping_line, wan_speed ])
+        self.display_text([ hostname, resource_line, ip_line, ping_line, wan_speed ])
 
         self.render_with_defaults()
 

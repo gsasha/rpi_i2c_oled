@@ -100,7 +100,7 @@ class HassioUtils(Utils):
             
             info = response.json() 
             
-            Utils.logger.info("---sss--- Command output " + str(info))
+            #Utils.logger.info("---sss--- Command output " + str(info))
             return info
 
         except requests.exceptions.HTTPError as e:
