@@ -93,7 +93,7 @@ class Display:
         past_date = datetime.datetime.fromisoformat(date_string)
 
         # Get the current time in UTC to ensure an apples-to-apples comparison.
-        now = datetime.datetime.now()
+        now = datetime.datetime.now(datetime.datetime.utc)
 
          # Calculate the difference between now and the past date.
         time_delta = now - past_date
