@@ -415,26 +415,24 @@ class NetworkScreen(BaseScreen):
     def render(self):
         self.hint = 'NET'
 
-        # self.set_icon('/img/ip-network.png')
-
         hostname = self.utils.get_hostname()
         mem = self.utils.get_hassio_entity("sensor.system_monitor_memory_usage", "state")
         cpu = self.utils.get_hassio_entity("sensor.system_monitor_processor_use", "state")
         disk = self.utils.get_hassio_entity("sensor.system_monitor_disk_usage", "state")
         temp = self.utils.get_hassio_entity("sensor.system_monitor_processor_temperature", "state")
-        resource_line = f"C{cpu} M{mem} D{disk} t{temp}"
+        resource_line = f"C{cpu}% M{mem}% D{disk}$ t{temp}°C"
 
         ip_eth = self.utils.get_hassio_entity("sensor.system_monitor_ipv4_address_end0", "state")
         ip_wlan = self.utils.get_hassio_entity("sensor.system_monitor_ipv4_address_wlan0", "state")
-        ip_line = f"IP {ip_eth} {ip_wlan}"
+        ip_line = f"A {ip_eth} {ip_wlan}"
 
         ping_status = self.utils.get_hassio_entity("binary_sensor.8_8_8_8", "state")
         ping_latency = self.utils.get_hassio_entity("sensor.8_8_8_8_round_trip_time_average", "state")
         self.logger.info(f"---sss--- ping_status '{ping_status}' ping_latency '{ping_latency}'")
         if ping_status == "on":
-          ping_line = f"8.8.8.8: {ping_latency}"
+          ping_line = f"Ping: {ping_latency}"
         else:
-          ping_line = "8.8.8.8: disconnected"
+          ping_line = "Ping: disconnected"
         download_speed = self.utils.get_hassio_entity("sensor.wan_download_speed_mbps", "state")
         upload_speed = self.utils.get_hassio_entity("sensor.wan_upload_speed_mbps", "state")
         wan_speed = f'U {upload_speed} D {download_speed}'
