@@ -75,7 +75,7 @@ class Display:
             self.logger.info("saving screenshot to '" + path + "'")
             self.image.save(path)
 
-    def human_readable_time_since(date_string: str) -> str:
+    def human_readable_time_since(self, date_string: str) -> str:
         """
         Calculates the time elapsed from a given ISO format date string to now
         and returns it in a human-readable format.
