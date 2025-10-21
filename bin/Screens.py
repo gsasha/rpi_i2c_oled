@@ -436,7 +436,7 @@ class NetworkScreen(BaseScreen):
         upload_speed = self.utils.get_hassio_entity("sensor.wan_upload_speed_mbps", "state")
         wan = f'P{ping_line} U{upload_speed} D{download_speed}'
 
-        last_boot = self.utils.get_hassio_entity(sensor.system_monitor_last_boot", "state")
+        last_boot = self.utils.get_hassio_entity("sensor.system_monitor_last_boot", "state")
         boot = "B {last_boot}"
         self.logger.info(hostname)
         self.logger.info(ip_line)
