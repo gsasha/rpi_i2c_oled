@@ -179,7 +179,7 @@ class HassioUtils(Utils):
         '''
         try :
             info = HassioUtils.hassos_get_api_object(state)
-            Utils.logger.info(f"[[[\n{info}\n]]]")
+            # Utils.logger.info(f"[[[\n{info}\n]]]")
             if info:
                 return info[property]
             else:
