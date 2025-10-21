@@ -94,7 +94,7 @@ class Display:
         past_date = time.strptime(date_string, "%Y-%m-%dT%H:%M:%S%z")
 
         # Get the current time in UTC to ensure an apples-to-apples comparison.
-        now = datetime.datetime.now(datetime.timezone.utc)
+        now = datetime.datetime.now()
 
          # Calculate the difference between now and the past date.
         time_delta = now - past_date
