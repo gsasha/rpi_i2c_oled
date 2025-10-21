@@ -423,8 +423,8 @@ class NetworkScreen(BaseScreen):
           ping_line = f"8.8.8.8: {ping_latency}"
         else:
           ping_line = "8.8.8.8: disconnected"
-        download_speed = self.utils.get_hassio_entity("sensor.wan_download_speed_mbps")
-        upload_speed = self.utils.get_hassio_entity("sensor.wan_upload_speed_mbps")
+        download_speed = self.utils.get_hassio_entity("sensor.wan_download_speed_mbps", "state")
+        upload_speed = self.utils.get_hassio_entity("sensor.wan_upload_speed_mbps", "state")
         wan_speed = f'UP {upload_speed} DOWN {download_speed}'
         self.logger.info(f"---sss--- hostname '{hostname}' ipv4 '{ipv4}' ping_status '{ping_status}' ping_latency '{ping_latency}'")
         self.logger.info(f'---sss--- ping_line ${ping_line} wan_speed ${wan_speed}')
