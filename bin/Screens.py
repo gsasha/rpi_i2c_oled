@@ -475,11 +475,6 @@ class MemoryScreen(BaseScreen):
         self.hint = 'MEM'
         self.set_icon("/img/memory.png")
 
-        self.display_text([
-             f"M {mem} C {cpu} D {disk}",
-             f"T {templ} GB",
-             f"IP {}" ])
-
         self.render_with_defaults()
 
     def render_old(self):
