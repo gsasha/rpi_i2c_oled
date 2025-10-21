@@ -148,11 +148,10 @@ class HassioUtils(Utils):
         namespace = properties[0]
         properties.pop(0)
         url = str(namespace) + "/info"
-        Utils.logger.info("Searching '"+ namespace +" for': " + '.'.join(properties))
         try :
-            Utils.logger.info(f"Getting info for url {url}")
+            # Utils.logger.info(f"Getting info for url {url}")
             info = HassioUtils.hassos_get_info(url)
-            Utils.logger.info(f"[[[\n${info}\n]]]")
+            # Utils.logger.info(f"[[[\n${info}\n]]]")
             if info and 'data' in info:
                 value = info['data']
                 data_key = namespace
