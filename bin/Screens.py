@@ -429,19 +429,22 @@ class NetworkScreen(BaseScreen):
         ping_status = self.utils.get_hassio_entity("binary_sensor.8_8_8_8", "state")
         ping_latency = self.utils.get_hassio_entity("sensor.8_8_8_8_round_trip_time_average", "state")
         if ping_status == "on":
-          ping_line = f"Ping: {ping_latency}"
+          ping_line = ping_latency
         else:
-          ping_line = "Ping: disconnected"
+          ping_line = "XXX"
         download_speed = self.utils.get_hassio_entity("sensor.wan_download_speed_mbps", "state")
         upload_speed = self.utils.get_hassio_entity("sensor.wan_upload_speed_mbps", "state")
-        wan_speed = f'U {upload_speed} D {download_speed}'
+        wan = f'P{ping_line} U{upload_speed} D{download_speed}'
+
+        last_boot = self.utils.get_hassio_entity(sensor.system_monitor_last_boot", "state")
+        boot = "B {last_boot}"
         self.logger.info(hostname)
         self.logger.info(ip_line)
         self.logger.info(resource_line)
-        self.logger.info(ping_line)
-        self.logger.info(wan_speed)
+        self.logger.info(wan)
+        self.logger.info(boot)
 
-        self.display_text([ hostname, resource_line, ip_line, ping_line, wan_speed ])
+        self.display_text([ hostname, resource_line, ip_line, wan, boot ])
 
         self.render_with_defaults()
 
