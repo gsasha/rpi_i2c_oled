@@ -418,7 +418,12 @@ class NetworkScreen(BaseScreen):
         self.set_icon('/img/ip-network.png')
 
         hostname = self.utils.get_hostname()
-        ipv4 = self.utils.get_ip()
+        mem = self.utils.get_hassio_entity("sensor.system_monitor_memory_usage", "state")
+        cpu = self.utils.get_hassio_entity("sensor.system_monitor_processor_use", "state")
+        disk = self.utils.get_hassio_entity("sensor.system_monitor_disk_usage", "state")
+        temp = self.utils.get_hassio_entity("sensor.system_monitor_processor_temperature", "state")
+        ip_eth = self.utils.get_hassio_entity("sensor.system_monitor_ipv4_address_end0", "state")
+        ip_wlan = self.utils.get_hassio_entity("sensor.system_monitor_ipv4_address_wlan0", "state")
         ping_status = self.utils.get_hassio_entity("binary_sensor.8_8_8_8", "state")
         ping_latency = self.utils.get_hassio_entity("sensor.8_8_8_8_round_trip_time_average", "state")
         self.logger.info(f"---sss--- ping_status '{ping_status}' ping_latency '{ping_latency}'")
@@ -428,12 +433,13 @@ class NetworkScreen(BaseScreen):
           ping_line = "8.8.8.8: disconnected"
         download_speed = self.utils.get_hassio_entity("sensor.wan_download_speed_mbps", "state")
         upload_speed = self.utils.get_hassio_entity("sensor.wan_upload_speed_mbps", "state")
-        wan_speed = f'UP {upload_speed} DOWN {download_speed}'
+        wan_speed = f'U {upload_speed} D {download_speed}'
         self.logger.info(f"---sss--- hostname '{hostname}' ipv4 '{ipv4}'")
         self.logger.info(f"---sss--- ping_line '{ping_line}' wan_speed '{wan_speed}'")
 
-        self.display_text([ hostname, ipv4, ping_line, wan_speed ])
-        #self.display_text([ hostname, ipv4, mac.upper() ])
+        resource_line = f"C{cpu} M{mem} D{disk} t{temp}"
+        ip_line = f"IP {ip_eth} {ip_wlan}"
+        self.display_text([ hostname, resource_line, ping_line, wan_speed ])
 
         self.render_with_defaults()
 
@@ -466,6 +472,17 @@ class StorageScreen(BaseScreen):
 
 class MemoryScreen(BaseScreen):
     def render(self):
+        self.hint = 'MEM'
+        self.set_icon("/img/memory.png")
+
+        self.display_text([
+             f"M {mem} C {cpu} D {disk}",
+             f"T {templ} GB",
+             f"IP {}" ])
+
+        self.render_with_defaults()
+
+    def render_old(self):
         self.hint = 'MEM'
         self.set_icon("/img/memory.png")
 
