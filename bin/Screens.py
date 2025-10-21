@@ -90,8 +90,7 @@ class Display:
             with two digits of precision.
         """
         # Parse the input string into a timezone-aware datetime object.
-        # The fromisoformat() method correctly handles the UTC offset (+00:00).
-        past_date = time.mktime(time.strptime(date_string, "%Y-%m-%dT%H:%M:%S%z"))
+        past_date = datetime.datetime(time.mktime(time.strptime(date_string, "%Y-%m-%dT%H:%M:%S%z")))
 
         # Get the current time in UTC to ensure an apples-to-apples comparison.
         now = datetime.datetime.now()
