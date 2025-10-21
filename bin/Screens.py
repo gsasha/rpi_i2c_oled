@@ -75,6 +75,47 @@ class Display:
             self.logger.info("saving screenshot to '" + path + "'")
             self.image.save(path)
 
+    def human_readable_time_since(date_string: str) -> str:
+        """
+        Calculates the time elapsed from a given ISO format date string to now
+        and returns it in a human-readable format.
+
+        Args:
+            date_string: An ISO 8601 formatted date string 
+                         (e.g., "2025-10-17T18:19:13+00:00").
+
+        Returns:
+            A formatted string like "X m ago", "Y h ago", or "Z d ago"
+            with two digits of precision.
+        """
+        # Parse the input string into a timezone-aware datetime object.
+        # The fromisoformat() method correctly handles the UTC offset (+00:00).
+        past_date = datetime.fromisoformat(date_string)
+
+        # Get the current time in UTC to ensure an apples-to-apples comparison.
+        now = datetime.now(timezone.utc)
+
+         # Calculate the difference between now and the past date.
+        time_delta = now - past_date
+
+        # Get the total number of seconds in the time difference.
+        total_seconds = time_delta.total_seconds()
+
+        # Determine the most appropriate unit (minutes, hours, or days).
+        if total_seconds < 3600:  # Less than 1 hour
+            value = total_seconds / 60.
+            unit = "m"
+        elif total_seconds < 86400:  # Less than 1 day (24 * 3600)
+            value = total_seconds / 3600
+            unit = "h"
+        else:  # 1 day or more
+            value = total_seconds / 86400
+            unit = "d"
+
+        # Format the string with 2 digits of precision and the determined unit.
+        return f"{value:.2f}{unit} ago"
+
+
 class BaseScreen:
     font_path = Utils.current_dir + "/fonts/DejaVuSans.ttf"
     font_bold_path = Utils.current_dir + "/fonts/DejaVuSans-Bold.ttf"
@@ -437,7 +478,8 @@ class NetworkScreen(BaseScreen):
         wan = f'P{ping_line} U{upload_speed} D{download_speed}'
 
         last_boot = self.utils.get_hassio_entity("sensor.system_monitor_last_boot", "state")
-        boot = f"B {last_boot}"
+        boot_since = human_readable_time_since(last_boot)
+        boot = f"B {boot_since}"
         self.logger.info(hostname)
         self.logger.info(ip_line)
         self.logger.info(resource_line)
