@@ -461,7 +461,7 @@ class NetworkScreen(BaseScreen):
         cpu = self.utils.get_hassio_entity("sensor.system_monitor_processor_use", "state")
         disk = self.utils.get_hassio_entity("sensor.system_monitor_disk_usage", "state")
         temp = self.utils.get_hassio_entity("sensor.system_monitor_processor_temperature", "state")
-        resource_line = f"C{cpu}% M{mem}% D{disk}$ t{temp}°C"
+        resource_line = f"C{cpu}% M{mem}% D{disk}% t{temp}°C"
 
         ip_eth = self.utils.get_hassio_entity("sensor.system_monitor_ipv4_address_end0", "state")
         ip_wlan = self.utils.get_hassio_entity("sensor.system_monitor_ipv4_address_wlan0", "state")
