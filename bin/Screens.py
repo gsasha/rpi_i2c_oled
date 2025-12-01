@@ -68,7 +68,7 @@ class Display:
 
     def human_readable_time_now(self) -> str:
          now = datetime.datetime.now(datetime.timezone.utc)
-         return now.strftime("%H:%M:%S")
+         return "T["+now.strftime("%H:%M:%S")+"]"
 
     def human_readable_time_since(self, date_string: str) -> str:
         """
