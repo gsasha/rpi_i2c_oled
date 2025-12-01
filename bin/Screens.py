@@ -233,6 +233,11 @@ class BaseScreen:
         self.render()
 
 
+class ExitScreen(BaseScreen):
+    def render(self):
+      self.display_text(["GOOD BYE"])
+      self.render_with_defaults()
+       
 class StatusScreen(BaseScreen):
     def render(self):
         hostname = self.utils.get_hostname()

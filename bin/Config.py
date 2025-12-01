@@ -178,7 +178,7 @@ class Config:
             raise Exception(name + " is not an enabled screen")
 
     def enable_graceful_exit(self):
-        screen = self.screen_factory('static')
+        screen = self.screen_factory('exit')
         text = self.get_option_value('graceful_exit_text')
         if not text:
             text = 'Goodbye'
