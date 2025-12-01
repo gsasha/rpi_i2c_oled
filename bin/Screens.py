@@ -66,6 +66,10 @@ class Display:
             self.logger.info("saving screenshot to '" + path + "'")
             self.image.save(path)
 
+    def human_readable_time_now(self) -> str:
+         now = datetime.datetime.now(datetime.timezone.utc)
+         return now.strftime("%H:%M:%S")
+
     def human_readable_time_since(self, date_string: str) -> str:
         """
         Calculates the time elapsed from a given ISO format date string to now
@@ -237,8 +241,7 @@ class ExitScreen(BaseScreen):
 class StatusScreen(BaseScreen):
     def render(self):
         hostname = self.utils.get_hostname()
-        now = datetime.now()
-        current_time = now.strftime("%H:%M:%S")
+        current_time = self.human_readable_time_now()
         hostname_line = f"{hostname} {current_time}"
         mem = self.utils.get_hassio_entity("sensor.system_monitor_memory_usage", "state")
         cpu = self.utils.get_hassio_entity("sensor.system_monitor_processor_use", "state")
