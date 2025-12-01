@@ -241,7 +241,7 @@ class ExitScreen(BaseScreen):
 class StatusScreen(BaseScreen):
     def render(self):
         hostname = self.utils.get_hostname()
-        current_time = self.human_readable_time_now()
+        current_time = self.display.human_readable_time_now()
         hostname_line = f"{hostname} {current_time}"
         mem = self.utils.get_hassio_entity("sensor.system_monitor_memory_usage", "state")
         cpu = self.utils.get_hassio_entity("sensor.system_monitor_processor_use", "state")
