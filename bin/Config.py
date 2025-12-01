@@ -83,7 +83,6 @@ class Config:
                 screenshot = False
 
             rotate = self.get_option_value('rotate')
-            compact = self.get_option_value('compact')
             driver = self.get_option_value('driver')
 
             self.display = Display(busnum=busnum, screenshot=screenshot,
