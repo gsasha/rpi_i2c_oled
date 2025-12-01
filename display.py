@@ -43,7 +43,7 @@ def start(config, logger):
 
     config.enable_graceful_exit()
 
-    while config.allow_master_render:
+    while True:
         for name in screens:
             logger.info("'" + name + "' is being processed")
             try:
