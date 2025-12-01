@@ -159,14 +159,9 @@ class Config:
         if not hasattr(self, 'utils'):
             self._init_utils()
 
-        if name == 'static':
+        if name == 'exit':
             duration = self.get_screen_duration(name)
-            screen = StaticScreen(duration, self.display, self.utils, self)
-            static_text = self.get_option_value('static_screen_text')
-            if static_text:
-                screen.text = static_text
-                if self.get_option_value('static_screen_text_noscroll'):
-                    screen.noscroll = True
+            screen = ExitScreen(duration, self.display, self.utils, self)
             return screen
         elif name in self.enabled_screens:
             class_name = name.capitalize() + 'Screen'
