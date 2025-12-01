@@ -45,15 +45,13 @@ def start(config, logger):
 
     while config.allow_master_render:
         for name in screens:
-            if config.allow_screen_render(name):
-                logger.info("'" + name + "' is being processed")
-                try:
-                    screen = config.screen_factory(name)
-                    screen.run()
-                    config.reduce_screen_limit(name)
-                except Exception as e:
-                    logger.critical("Screen '" + name + "' has an internal error: " + str(e))
-                    continue
+            logger.info("'" + name + "' is being processed")
+            try:
+                screen = config.screen_factory(name)
+                screen.run()
+            except Exception as e:
+                logger.critical("Screen '" + name + "' has an internal error: " + str(e))
+                continue
 
 def set_logging_level(level):
     logging.basicConfig()

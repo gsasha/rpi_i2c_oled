@@ -10,13 +10,7 @@ from bin.Utils import HassioUtils, Utils
 class Config:
     DEFAULT_DURATION = 10
     SUPPORTED_SCREENS = [
-        'welcome',
-        'splash',
-        'network',
-        'storage',
-        'memory',
-        'cpu',
-        'static'
+        'status',
     ]
     HASSIO_DEPENDENT_SCREENS = [
         'Splash'
@@ -30,15 +24,9 @@ class Config:
         'i2c_bus': 'i2c_bus',
         'screenshot': 'screenshot',
         'graceful_exit_text': 'graceful_exit_text',
-        'static_screen_text': 'static_screen_text',
-        'static_screen_text_noscroll': 'static_screen_text_noscroll',
-        'scroll_amplitude': 'scroll_amplitude',
         'datetime_format': 'datetime_format',
         'welcome_screen_text': 'welcome_screen_text',
         'rotate': 'rotate',
-        'show_icons': 'show_icons',
-        'show_hint': 'show_hint',
-        'compact': 'compact',
         'driver': 'driver'
     }
 
@@ -49,7 +37,6 @@ class Config:
         self.default_duration = Config.DEFAULT_DURATION
         self._process_default_options()
         self.enabled_screens = []
-        self.screen_limits = {}
 
     def _load_options(self, path):
         Config.logger.info('Loading config: ' + path)
@@ -65,26 +52,6 @@ class Config:
         scroller_amplitude = self.get_option_value('scroll_amplitude')
         if scroller_amplitude:
             Scroller.default_amplitude = scroller_amplitude
-
-    def allow_screen_render(self, screen):
-        if self.allow_master_render:
-            if screen in self.screen_limits:
-                if self.screen_limits[screen]:
-                    return True
-                else:
-                    return False
-
-            return True
-
-        Config.logger.info('Master renderer killed... kill, kill, kill it with a knife')
-        return False
-
-    @property
-    def allow_master_render(self):
-        if hasattr(self, 'graceful_exit'):
-            return not self.graceful_exit.exit
-
-        return True
 
     @property
     def is_hassio_supported(self):
@@ -116,14 +83,11 @@ class Config:
                 screenshot = False
 
             rotate = self.get_option_value('rotate')
-            show_icons = self.get_option_value('show_icons')
-            show_hint = self.get_option_value('show_hint')
             compact = self.get_option_value('compact')
             driver = self.get_option_value('driver')
 
             self.display = Display(busnum=busnum, screenshot=screenshot,
-                                   rotate=rotate, show_icons=show_icons,
-                                   show_hint=show_hint, compact=compact,
+                                   rotate=rotate, compact=compact,
                                    driver=driver)
 
         except Exception as e:
@@ -144,38 +108,13 @@ class Config:
             if name not in Config.HASSIO_DEPENDENT_SCREENS or self.is_hassio_supported:
                 self.enabled_screens.append(name.lower())
 
-    def remove_enabled_screen(self, name):
-        if name in self.enabled_screens:
-            self.enabled_screens.remove(name)
-            Config.logger.info("'" + name + "' removed from enabled screens")
-
-    def add_screen_limit(self, screen, limit):
-        Config.logger.info("'" + screen + "' limited to " + str(limit) + " iterations")
-        self.screen_limits[screen.lower()] = int(limit)
-
-    def reduce_screen_limit(self, screen):
-        screen = screen.lower()
-        if screen in self.screen_limits:
-            self.screen_limits[screen] = self.screen_limits[screen] - 1
-            Config.logger.info("'" + screen + "' limit reduced to " + str(self.screen_limits[screen]) + " iterations")
-            if not self.screen_limits[screen]:
-                Config.logger.info("'" + screen + "' iteration limit reached")
-                self.remove_enabled_screen(screen)
-
     def get_enabled_screens(self):
         '''
             Get a list of screens which have been configured by checking the 'show_[name]_screen' option
             If the property is not present, assume True
         '''
         for screen in Config.SUPPORTED_SCREENS:
-            if self.has_option('show', screen):
-                if self.get_option_value('show', screen):
-                    self.enable_screen(screen)
-                    limit = self.get_option_value('limit', screen)
-                    if limit:
-                        self.add_screen_limit(screen, limit)
-            else:
-                self.enable_screen(screen)
+            self.enable_screen(screen)
 
         return self.enabled_screens
 
@@ -236,12 +175,6 @@ class Config:
             duration = self.get_screen_duration(name)
             screen = globals()[class_name](duration, self.display, self.utils, self)
 
-            if name == 'cpu':
-                screen.set_temp_unit(self.get_option_value('temp_unit'))
-
-            if name == 'welcome':
-                screen.text = self.get_option_value('welcome_screen_text')
-                screen.amplitude = self.get_option_value('scroll_amplitude')
             return screen
         else:
             raise Exception(name + " is not an enabled screen")
