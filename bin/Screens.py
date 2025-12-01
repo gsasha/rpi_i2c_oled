@@ -273,7 +273,7 @@ class StatusScreen(BaseScreen):
         self.logger.info(wan)
         self.logger.info(boot)
 
-        self.display_text([ hostname, resource_line, ip_line, wan, boot ])
+        self.display_text([ hostname_line, resource_line, ip_line, wan, boot ])
 
         self.render_with_defaults()
 
