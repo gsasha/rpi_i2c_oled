@@ -31,8 +31,8 @@ class Display:
           # Preserve current behavior as default.
           self.device = SSD1306(busnum)
         self.clear()
-        self.width = self.display.width
-        self.height = self.display.height
+        self.width = self.device.width
+        self.height = self.device.height
         self.rotate = rotate
 
         self.image = Image.new("1", (self.width, self.height))
