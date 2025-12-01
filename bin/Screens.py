@@ -242,7 +242,7 @@ class StatusScreen(BaseScreen):
     def render(self):
         hostname = self.utils.get_hostname()
         current_time = self.display.human_readable_time_now()
-        hostname_line = f"{hostname} T={current_time}+"+current_time
+        hostname_line = f"{hostname} T={current_time} +"+current_time
         mem = self.utils.get_hassio_entity("sensor.system_monitor_memory_usage", "state")
         cpu = self.utils.get_hassio_entity("sensor.system_monitor_processor_use", "state")
         disk = self.utils.get_hassio_entity("sensor.system_monitor_disk_usage", "state")
