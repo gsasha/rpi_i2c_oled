@@ -23,13 +23,13 @@ class Display:
 
         if driver == "SSD1306":
           self.logger.info("Creating a SSD1306 driver")
-          self.display = SSD1306(busnum)
+          self.device = SSD1306(busnum)
         elif driver == "SSD1309":
           self.logger.info("Creating a SSD1309 driver")
-          self.display = SSD1309(busnum)
+          self.device = SSD1309(busnum)
         else:
           # Preserve current behavior as default.
-          self.display = SSD1306(busnum)
+          self.device = SSD1306(busnum)
         self.clear()
         self.width = self.display.width
         self.height = self.display.height
@@ -40,9 +40,9 @@ class Display:
         self.screenshot = screenshot
 
     def clear(self):
-        self.display.begin()
-        self.display.clear()
-        self.display.display()
+        self.device.begin()
+        self.device.clear()
+        self.device.display()
 
     def prepare(self):
         self.draw.rectangle((0, 0, self.width, self.height), outline = 0, fill = 0)
@@ -52,8 +52,8 @@ class Display:
             self.image = self.image.rotate(self.rotate)
             self.draw = ImageDraw.Draw(self.image)
 
-        self.display.image(self.image)
-        self.display.display()
+        self.device.image(self.image)
+        self.device.display()
 
     def capture_screenshot(self, name):
         if self.screenshot:

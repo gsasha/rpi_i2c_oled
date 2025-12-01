@@ -86,8 +86,7 @@ class Config:
             driver = self.get_option_value('driver')
 
             self.display = Display(busnum=busnum, screenshot=screenshot,
-                                   rotate=rotate, compact=compact,
-                                   driver=driver)
+                                   rotate=rotate, driver=driver)
 
         except Exception as e:
             raise Exception("Could not create display. Check your i2c bus with 'ls /dev/i2c-*'.")
