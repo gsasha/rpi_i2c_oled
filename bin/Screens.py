@@ -238,11 +238,12 @@ class ExitScreen(BaseScreen):
       self.display_text(["GOOD BYE"])
       self.render_with_defaults()
        
-class StatusScreen1(BaseScreen):
+class StatusScreen(BaseScreen):
     def render(self):
         hostname = self.utils.get_hostname()
         current_time = self.display.human_readable_time_now()
-        hostname_line = f"{hostname} T={current_time} +"+current_time
+        hostname_line = f"{hostname} {current_time}"
+
         mem = self.utils.get_hassio_entity("sensor.system_monitor_memory_usage", "state")
         cpu = self.utils.get_hassio_entity("sensor.system_monitor_processor_use", "state")
         disk = self.utils.get_hassio_entity("sensor.system_monitor_disk_usage", "state")
@@ -266,7 +267,7 @@ class StatusScreen1(BaseScreen):
         last_boot = self.utils.get_hassio_entity("sensor.system_monitor_last_boot", "state")
         boot_since = self.display.human_readable_time_since(last_boot)
         boot = f"B {boot_since}"
-        self.logger.info(hostname)
+        self.logger.info(hostname_line)
         self.logger.info(ip_line)
         self.logger.info(resource_line)
         self.logger.info(wan)
