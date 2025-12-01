@@ -160,7 +160,7 @@ class BaseScreen:
            # display the text line at the correct x / y based on config
            x = self.text_indent
            y = self.text_y[line]
-           self.draw.text((x, y), text, font=font, fill=255)
+           self.display.draw.text((x, y), text, font=font, fill=255)
 
            line += 1
            if line >= 6:
