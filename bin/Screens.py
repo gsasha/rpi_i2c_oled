@@ -238,7 +238,7 @@ class ExitScreen(BaseScreen):
       self.display_text(["GOOD BYE"])
       self.render_with_defaults()
        
-class StatusScreen(BaseScreen):
+class StatusScreen1(BaseScreen):
     def render(self):
         hostname = self.utils.get_hostname()
         current_time = self.display.human_readable_time_now()
