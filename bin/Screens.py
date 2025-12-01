@@ -217,10 +217,6 @@ class BaseScreen:
 
     # helper function to display the current page (used by standard screens)
     def render_with_defaults(self):
-        # add icon to canvas (if enabled)
-        if self.display.show_icons and self.icon:
-           self.display.image.paste(self.icon, (-3, 3))
-
         self.capture_screenshot()
         self.display.show()
         time.sleep(self.duration)
